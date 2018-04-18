@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Container, Icon, TextArea, Form, Button } from 'semantic-ui-react';
+import { Container, Icon, TextArea, Form, Button, Checkbox } from 'semantic-ui-react';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      draftText: ''
+      draftText: '',
+      usePipe: true 
     };
   }
 
@@ -19,10 +20,23 @@ class App extends Component {
           {/* <p>TeXを使えない情弱の君たちのためのツールだよ</p> */}
           <Form>
             <Form.Field>
+              <Checkbox
+                toggle
+                checked={this.state.usePipe}
+                label='行番号にパイプ( | )をつける'
+                onClick={() => this.setState({usePipe: !this.state.usePipe})}
+              />
+            </Form.Field>
+            <Form.Field>
               <TextArea
-                onChange={e => this.setState({draftText: e.target.value})}
+                onChange={e => this.setState({
+                  draftText: e.target.value
+                })}
                 placeholder='Input your code here!'
-                style={{minHeight: 200}}
+                style={{
+                  minHeight: 200,
+                  fontFamily: "Consolas, 'Courier New', Courier, Monaco, monospace"
+                }}
               />
             </Form.Field>
 
@@ -35,12 +49,13 @@ class App extends Component {
                   positive
                   icon
                   labelPosition='left'
-                  onClick={() => execCopy(appendLineNumber(this.state.draftText))}
+                  onClick={() => execCopy(appendLineNumber(this.state.draftText, this.state.usePipe))}
                 ><Icon name='clipboard' />Copy</Button>
                 <TextArea
-                  value={appendLineNumber(this.state.draftText)}
+                  value={appendLineNumber(this.state.draftText, this.state.usePipe)}
                   autoHeight
-                  readonly
+                  readOnly
+                  style={{fontFamily: "Consolas, 'Courier New', Courier, Monaco, monospace"}}
                 />
               </Form.Field>
             )}
@@ -51,13 +66,13 @@ class App extends Component {
   }
 }
 
-const appendLineNumber = (text) => {
+const appendLineNumber = (text, usePipe = true) => {
   let result = '';
   const lines = text.split('\n');
   const maxDigit = String(lines.length).length
   
   lines.forEach((line, index) => {
-    result += (index + 1) + ' '.repeat(1 + (maxDigit - (String(index).length))) + line + '\n'
+    result += (index + 1) + (' '.repeat((maxDigit - String(index + 1).length) + 1)) + (usePipe ? '| ' : '') + line + '\n'
   });
 
   return result;
