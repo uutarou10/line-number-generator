@@ -21,6 +21,7 @@ class App extends Component {
               <TextArea
                 onChange={e => this.setState({draftText: e.target.value})}
                 placeholder='Input your code here!'
+                style={{minHeight: 200}}
               />
             </Form.Field>
 
