@@ -15,6 +15,7 @@ class App extends Component {
         <Container>
           <h1><Icon name='code' />Line number generator</h1>
           <p>ソースコードを貼り付けると行番号を追加したテキストを生成するツールです。</p>
+          <p>動作は保証しません。自己責任で使用してください。</p>
           {/* <p>TeXを使えない情弱の君たちのためのツールだよ</p> */}
           <Form>
             <Form.Field>
