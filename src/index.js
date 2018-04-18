@@ -15,7 +15,6 @@ setInterval(() => {
     index += 1;
   }
 
-  // console.clear();
   console.log(
     '%cWordを使うな、LaTeXを使え。',
     `font-size: 300%; color: ${colors[index]}; font-weight: bold;`
